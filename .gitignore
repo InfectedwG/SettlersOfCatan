@@ -401,3 +401,5 @@ FodyWeavers.xsd
 SettlersOfCatan/.vs
 SettlersOfCatan/bin
 SettlersOfCatan/obj
+*.vsidx
+*.vsidx
