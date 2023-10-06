@@ -396,3 +396,8 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+
+SettlersOfCatan/.vs
+SettlersOfCatan/bin
+SettlersOfCatan/obj
