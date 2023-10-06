@@ -49,5 +49,13 @@ namespace SettlersOfCatan
 
             return result;
         }
+
+        public bool IsHexEdgeHex(Dictionary<char, int[]> limits) // limits represented as q : limits + and -, r : limits + and -, s : limits + and -
+        {
+            if (this.position[0] == limits['q'][0] || this.position[0] == limits['q'][1] || 
+                this.position[1] == limits['r'][0] || this.position[1] == limits['r'][1] || 
+                this.position[2] == limits['s'][0] || this.position[2] == limits['s'][1]) return true;
+            else return false;
+        }
     }
 }
