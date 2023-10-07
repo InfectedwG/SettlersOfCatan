@@ -33,7 +33,7 @@ namespace SettlersOfCatan
             cornerAdjacentHex.Add(5, new int[] { 4, 5 });
         }
 
-        public Hexagon[] adjacentHexWithCorner(int corner)
+        public Hexagon[] RelativePositionOfAdjacentHexesWithCorner(int corner)
         {
             Hexagon hex1;
             Hexagon hex2;
@@ -50,12 +50,36 @@ namespace SettlersOfCatan
             return result;
         }
 
-        public bool IsHexEdgeHex(Dictionary<char, int[]> limits) // limits represented as q : limits + and -, r : limits + and -, s : limits + and -
+        public List<Hexagon> AbsolutePositionOfAdjacentHexesWithCorner(int corner, Dictionary<char, int[]> limits)
         {
-            if (this.position[0] == limits['q'][0] || this.position[0] == limits['q'][1] || 
-                this.position[1] == limits['r'][0] || this.position[1] == limits['r'][1] || 
-                this.position[2] == limits['s'][0] || this.position[2] == limits['s'][1]) return true;
-            else return false;
+            List<Hexagon> result = new List<Hexagon>();
+            result.Add(this);
+            Hexagon[] relativePositions = this.RelativePositionOfAdjacentHexesWithCorner(corner);
+
+            Hexagon hex1 = new Hexagon(
+                this.Position[0] + relativePositions[0].Position[0], 
+                this.Position[1] + relativePositions[0].Position[1], 
+                this.Position[2] + relativePositions[0].Position[2]);
+
+            Hexagon hex2 = new Hexagon(
+                this.Position[0] + relativePositions[1].Position[0],
+                this.Position[1] + relativePositions[1].Position[1],
+                this.Position[2] + relativePositions[1].Position[2]);
+
+            if (hex1.HexExists(limits)) result.Add(hex1);
+
+            if(hex2.HexExists(limits)) result.Add(hex2);
+
+            return result;
+        }
+
+
+        public bool HexExists(Dictionary<char, int[]> limits) // limits represented as q : limits + and -, r : limits + and -, s : limits + and -
+        {
+            if (this.position[0] > limits['q'][0] || this.position[0] > limits['q'][1] || 
+                this.position[1] > limits['r'][0] || this.position[1] > limits['r'][1] || 
+                this.position[2] > limits['s'][0] || this.position[2] > limits['s'][1]) return false;
+            else return true;
         }
     }
 }

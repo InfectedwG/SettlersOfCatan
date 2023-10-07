@@ -9,17 +9,19 @@ namespace SettlersOfCatan
     internal class Vertice
     {
         private int id;
+        private int counter = 0;
+        private Dictionary<Hexagon, int> adjacentHexes = new Dictionary<Hexagon, int>();
 
-        public int Id
-        {
-            get { return id; }
-            set
-            {
-                if (value >= 0 && value <= 5) id = value;
-                else id = 0;
-            }
+        public int Id { get; }
+
+        public Dictionary<Hexagon, int> AdjacentHexes { get; }
+
+        public Vertice() 
+        { 
+            id = counter;
+            counter++;
         }
 
-        public Vertice(int id) { Id = id; }
+
     }
 }
