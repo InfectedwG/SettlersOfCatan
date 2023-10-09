@@ -30,7 +30,10 @@ namespace SettlersOfCatan
             cornerIDs.Add(hex1CornerId);
             cornerIDs.Add(AdjacentHex_sCornerId(hex1CornerId));
 
-            for (int i = 0; i < adjacentHexes.Count && i < cornerIDs.Count; i++) AdjacentHexesAndCorners.Add(adjacentHexes[i], cornerIDs[i]);
+            for (int i = 0; i < adjacentHexes.Count && i < cornerIDs.Count; i++)
+            {
+                AdjacentHexesAndCorners.Add(adjacentHexes[i], cornerIDs[i]);
+            }
 
 
         }
@@ -41,7 +44,7 @@ namespace SettlersOfCatan
          */
         public static int AdjacentHex_sCornerId(int cornerOrigin)
         {
-            int cornerId = cornerOrigin+2;
+            int cornerId = cornerOrigin + 2;
 
             if(cornerId > 5)
             {
