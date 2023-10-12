@@ -20,6 +20,28 @@ namespace SettlersOfCatan
         { 
             id = counter;
             counter++;
+
+            List<Hexagon> adjacentHexes = hex.AbsolutePositionOfAdjacentHexesToVertice(verticeId, limits);
+            List<int> verticesId = new List<int>
+            {
+                verticeId
+            };
+            int hexVerticeId = AdjacentHex_sVerticeId(verticeId);
+
+
+        }
+
+        public static int AdjacentHex_sVerticeId(int verticeOrigin)
+        {
+            int verticeId = verticeOrigin + 3;
+
+            if (verticeId > 5)
+            {
+                int rest = verticeId - 5;
+                verticeId = rest - 1;
+            }
+
+            return verticeId;
         }
 
 

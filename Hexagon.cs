@@ -50,6 +50,17 @@ namespace SettlersOfCatan
             return result;
         }
 
+        public Hexagon RelativePositionOfAdjacentHexToVertice(int vertice)
+        {
+            Hexagon hex;
+            int hexId = vertice;
+
+            int[] position = adjacentHexRelativePosition[hexId];
+            hex = new Hexagon(position[0], position[1], position[2]);
+
+            return hex;
+        }
+
         public List<Hexagon> AbsolutePositionOfAdjacentHexesWithCorner(int corner, Dictionary<char, int[]> limits)
         {
             List<Hexagon> result = new List<Hexagon>();
@@ -69,6 +80,22 @@ namespace SettlersOfCatan
             if (hex1.HexExists(limits)) result.Add(hex1);
 
             if(hex2.HexExists(limits)) result.Add(hex2);
+
+            return result;
+        }
+
+        public List<Hexagon> AbsolutePositionOfAdjacentHexesToVertice(int vertice, Dictionary<char, int[]> limits)
+        {
+            List<Hexagon> result = new List<Hexagon>();
+            result.Add(this);
+            Hexagon relativePosition = this.RelativePositionOfAdjacentHexToVertice(vertice);
+
+            Hexagon hex = new Hexagon(
+                this.Position[0] + relativePosition.Position[0],
+                this.Position[1] + relativePosition.Position[1],
+                this.Position[2] + relativePosition.Position[2]);
+
+            if (hex.HexExists(limits)) result.Add(hex);
 
             return result;
         }
