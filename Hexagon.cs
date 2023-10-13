@@ -8,12 +8,18 @@ namespace SettlersOfCatan
 {
     internal class Hexagon
     {
-        public static Dictionary<int, int[]> adjacentHexRelativePosition = new Dictionary<int, int[]>();
-        public Dictionary<int, int[]> cornerAdjacentHex = new Dictionary<int, int[]>();
-        private int[] position = new int[3];
+        public readonly Dictionary<int, int[]> adjacentHexRelativePosition = new Dictionary<int, int[]>();
+        public readonly Dictionary<int, int[]> cornerAdjacentHex = new Dictionary<int, int[]>();
+        private readonly int[] position = new int[3];
+        private readonly int id;
+        private int counter = 0;
+        
         public int[] Position { get { return position; } }
         public Hexagon(int col, int row, int slice)
         {
+            id = counter;
+            counter++;
+
             position[0] = col; //q
             position[1] = row;
             position[2] = slice;
@@ -50,10 +56,10 @@ namespace SettlersOfCatan
             return result;
         }
 
-        public Hexagon RelativePositionOfAdjacentHexToVertice(int vertice)
+        public Hexagon RelativePositionOfAdjacentHexToEdge(int edge)
         {
             Hexagon hex;
-            int hexId = vertice;
+            int hexId = edge;
 
             int[] position = adjacentHexRelativePosition[hexId];
             hex = new Hexagon(position[0], position[1], position[2]);
@@ -84,11 +90,11 @@ namespace SettlersOfCatan
             return result;
         }
 
-        public List<Hexagon> AbsolutePositionOfAdjacentHexesToVertice(int vertice, Dictionary<char, int[]> limits)
+        public List<Hexagon> AbsolutePositionOfAdjacentHexesToEdge(int vertice, Dictionary<char, int[]> limits)
         {
             List<Hexagon> result = new List<Hexagon>();
             result.Add(this);
-            Hexagon relativePosition = this.RelativePositionOfAdjacentHexToVertice(vertice);
+            Hexagon relativePosition = this.RelativePositionOfAdjacentHexToEdge(vertice);
 
             Hexagon hex = new Hexagon(
                 this.Position[0] + relativePosition.Position[0],

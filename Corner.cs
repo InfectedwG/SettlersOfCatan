@@ -31,11 +31,7 @@ namespace SettlersOfCatan
             cornerIDs.Add(AdjacentHex_sCornerId(hex1CornerId));
 
             for (int i = 0; i < adjacentHexes.Count && i < cornerIDs.Count; i++)
-            {
                 AdjacentHexesAndCorners.Add(adjacentHexes[i], cornerIDs[i]);
-            }
-
-
         }
         /*
          the corner of the adjacent hex is the origin+2 if origin+2 <= 5, 
