@@ -46,6 +46,31 @@ namespace SettlersOfCatan
             return edgeId;
         }
 
+        public bool AreEquals(Edge edge)
+        {
+            bool result = false;
+
+            for (int i = 0; i < this.adjacentHexesAndEdges.Count || i < edge.adjacentHexesAndEdges.Count; i++)
+            {
+                Hexagon hex1 = this.adjacentHexesAndEdges.ElementAt(i).Key;
+                int edgeId1 = this.adjacentHexesAndEdges[hex1];
+
+                for (int j = 0; j < edge.adjacentHexesAndEdges.Count; j++)
+                {
+                    Hexagon hex2 = edge.adjacentHexesAndEdges.ElementAt(j).Key;
+                    int edgeId2 = edge.adjacentHexesAndEdges[hex2];
+                    if (hex1.AreEquals(hex2) && edgeId1 == edgeId2)
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+                if (result) break;
+            }
+
+            return result;
+        }
+
 
     }
 }

@@ -16,7 +16,8 @@ namespace SettlersOfCatan
 
         public int Id { 
             get { return id; } 
-            set { 
+            set 
+            { 
                 if (value < 6)
                 {
                     id = value;

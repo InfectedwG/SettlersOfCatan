@@ -31,7 +31,7 @@ namespace SettlersOfCatan
             cornerIDs.Add(AdjacentHex_sCornerId(hex1CornerId));
 
             for (int i = 0; i < adjacentHexes.Count && i < cornerIDs.Count; i++)
-                AdjacentHexesAndCorners.Add(adjacentHexes[i], cornerIDs[i]);
+                adjacentHexesAndCorners.Add(adjacentHexes[i], cornerIDs[i]);
         }
         /*
          the corner of the adjacent hex is the origin+2 if origin+2 <= 5, 
@@ -49,6 +49,31 @@ namespace SettlersOfCatan
             }
 
             return cornerId;
+        }
+
+        public bool AreEquals(Corner corner)
+        {
+            bool result = false;
+
+            for (int i = 0; i < this.adjacentHexesAndCorners.Count || i < corner.adjacentHexesAndCorners.Count; i++)
+            {
+                Hexagon hex1 = this.adjacentHexesAndCorners.ElementAt(i).Key;
+                int cornerId1 = this.adjacentHexesAndCorners[hex1];
+
+                for (int j = 0; j < corner.adjacentHexesAndCorners.Count; j++)
+                {
+                    Hexagon hex2 = corner.adjacentHexesAndCorners.ElementAt(j).Key;
+                    int cornerId2 = corner.adjacentHexesAndCorners[hex2];
+                    if (hex1.AreEquals(hex2) && cornerId1 == cornerId2)
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+                if (result) break;
+            }
+
+            return result;
         }
     }
 }

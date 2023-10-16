@@ -10,12 +10,12 @@ namespace SettlersOfCatan
     {
         public Cost cost = new Cost(0, 0, 0, 1, 1);
         private Hexagon hexPosition;
-        private Vertice verticePosition;
+        private Edge verticePosition;
 
         public Hexagon HexPosition { get; set; }
-        public Vertice VerticePosition { get; set; }
+        public Edge VerticePosition { get; set; }
 
-        public Road(Hexagon hex, Vertice vertice, int victoryPoints) : base (victoryPoints)
+        public Road(Hexagon hex, Edge vertice, int victoryPoints) : base (victoryPoints)
         {
             HexPosition = hex;
             VerticePosition = vertice;
