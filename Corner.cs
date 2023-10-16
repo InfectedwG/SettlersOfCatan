@@ -75,5 +75,11 @@ namespace SettlersOfCatan
 
             return result;
         }
+        /*
+        public bool AreAdjacent(Corner corner)
+        {
+
+        }
+        */
     }
 }

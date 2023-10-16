@@ -26,21 +26,21 @@ namespace SettlersOfCatan
             int r = limits['r'][1];
             int s = limits['s'][1];
 
-            for (int i = 1; i == r; i++)
+            for (int i = 1; i <= r; i++)
             {
                 Hexagon hexPos = new Hexagon(0, i, -i);
                 Hexagon hexNeg = new Hexagon(0, -i, i);
                 hexList.Add(hexPos);
                 hexList.Add(hexNeg);
             }
-            for (int i = 1; i == s; i++)
+            for (int i = 1; i <= s; i++)
             {
                 Hexagon hexPos = new Hexagon(-i, 0, i);
                 Hexagon hexNeg = new Hexagon(i, 0, -i);
                 hexList.Add(hexPos);
                 hexList.Add(hexNeg);
             }
-            for (int i = 1; i == q; i++)
+            for (int i = 1; i <= q; i++)
             {
                 Hexagon hexPos = new Hexagon(i, -i, 0);
                 Hexagon hexNeg = new Hexagon(-i, i, 0);
@@ -107,15 +107,16 @@ namespace SettlersOfCatan
                 }
             }
 
-            //attribution of resources
+            //attribution of resources and numberToken
             int[] resourcePool = availableResources(limits);
+            int[] numberTokenPool = availableNumberTokens(limits);
 
             Random random = new Random();
 
             foreach (var hex in hexList)
             {
                 int roll;
-
+                //attribution of resources
                 do
                 {
                     roll = random.Next(0, 5);
@@ -131,11 +132,32 @@ namespace SettlersOfCatan
                     default: hex.Resource = "wheat"; break;
                 }
                 resourcePool[roll] -= 1;
+
+                //attribution of numberTokens
+                do
+                {
+                    roll = random.Next(0, 9);
+                } while (numberTokenPool[roll] == 0);
+
+                switch (roll)
+                {
+                    case 1: hex.NumberToken = 5; break;
+                    case 2: hex.NumberToken = 6; break;
+                    case 3: hex.NumberToken = 8; break;
+                    case 4: hex.NumberToken = 9; break;
+                    case 5: hex.NumberToken = 10; break;
+                    case 6: hex.NumberToken = 11; break;
+                    case 7: hex.NumberToken = 3; break;
+                    case 8: hex.NumberToken = 12; break;
+                    case 9: hex.NumberToken = 2; break;
+                    default: hex.NumberToken = 4; break;
+                }
+                numberTokenPool[roll] -= 1;
             }
 
-
-
-
+            
+            
+            
 
         }
 
@@ -146,7 +168,7 @@ namespace SettlersOfCatan
             int length = q * 2 + 1;
             int total = length;
 
-            for (int i = 1; i == r; i++)
+            for (int i = 1; i <= r; i++)
             {
                 total += 2 * (length - 1);
                 length -= 1;
@@ -190,7 +212,7 @@ namespace SettlersOfCatan
             else directionFactor = 1;
 
             
-            for (int i = 1; i == limit; i++)
+            for (int i = 1; i <= limit; i++)
             {
                 pos0 = i + 1;
                 for (int j = 0; j < lineCounter; j++)
@@ -264,7 +286,54 @@ namespace SettlersOfCatan
 
             return new int[] { desert, wheat, wool, ore, clay, wood};
         }
-        
+
+        public static int[] availableNumberTokens(Dictionary<char, int[]> limits)
+        {
+            //array structure : [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+            int numberOfHex = numberOfHexes(limits);
+            int _2 = 1;
+            int _3 = 2;
+            int _4 = 2;
+            int _5 = 2;
+            int _6 = 2;
+            int _8 = 2;
+            int _9 = 2;
+            int _10 = 2;
+            int _11 = 1;
+            int _12 = 1;
+            int[] result = new int[] { _4, _5, _6, _8, _9, _10, _11, _3, _12, _2 };
+
+            if (numberOfHex > 19)
+            {
+                int numberToAdd = (numberOfHex - 19) / 10;
+                int rest = (numberOfHex - 19) % 10;
+
+                for (int i = 0; i < result.Length; i++)
+                {
+                    result[i] += numberToAdd;
+                }
+
+                for (int i = 0; i <= rest; i++)
+                {
+                    result[i] += 1;
+                }
+
+                
+            }
+
+            return result;
+        }
+
+        public List<Edge> EdgesAdjacentToCorner(Corner corner)
+        {
+            List<Edge> result = new List<Edge>();
+
+
+
+            return result;
+        }
+
 
     }
 }
