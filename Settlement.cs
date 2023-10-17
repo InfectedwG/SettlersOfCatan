@@ -11,6 +11,7 @@ namespace SettlersOfCatan
         private Cost cost = new Cost(1, 1, 0, 1, 1);
         private Hexagon hexPosition;
         private Corner cornerPosition;
+        private Player owner;
 
         public Cost Cost { get { return cost; } }
         public Hexagon HexPosition { get; set; }

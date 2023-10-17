@@ -14,7 +14,7 @@ namespace SettlersOfCatan
 
         public int Id { get; }
 
-        public Dictionary<Hexagon, int> AdjacentHexes { get; }
+        public Dictionary<Hexagon, int> AdjacentHexesAndEdges { get; }
 
         public Edge(Hexagon hex, int edgeId, Dictionary<char, int[]> limits) 
         { 

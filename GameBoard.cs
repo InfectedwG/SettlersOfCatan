@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -328,6 +329,112 @@ namespace SettlersOfCatan
         public List<Edge> EdgesAdjacentToCorner(Corner corner)
         {
             List<Edge> result = new List<Edge>();
+            int i;
+            int edgeId1;
+            int edgeId2;
+            int edgeId3;
+
+
+            switch (corner.AdjacentHexesAndCorners.Count)
+            {
+                case 1:
+                    i = 0;
+                    Hexagon hex = corner.AdjacentHexesAndCorners.ElementAt(0).Key;
+                    while (result.Count < 2)
+                    {
+                        if (EdgeList[i].AdjacentHexesAndEdges.Count == 1 && 
+                            EdgeList[i].AdjacentHexesAndEdges.ElementAt(0).Key.AreEquals(hex))
+                        {
+                            result.Add(EdgeList[i]);
+                        }
+                        i++;
+                    }
+                    break;
+                case 2:
+                    i = 0;
+                    Hexagon hex1 = corner.AdjacentHexesAndCorners.ElementAt(0).Key;
+                    Hexagon hex2 = corner.AdjacentHexesAndCorners.ElementAt(1).Key;
+                    while (result.Count < 3)
+                    {
+                        if(EdgeList[i].AdjacentHexesAndEdges.Count == 2)
+                        {
+                            if ((EdgeList[i].AdjacentHexesAndEdges.ElementAt(0).Key.AreEquals(hex1) || EdgeList[i].AdjacentHexesAndEdges.ElementAt(1).Key.AreEquals(hex1)) &&
+                                (EdgeList[i].AdjacentHexesAndEdges.ElementAt(0).Key.AreEquals(hex2) || EdgeList[i].AdjacentHexesAndEdges.ElementAt(1).Key.AreEquals(hex2)))
+                            {
+                                result.Add(EdgeList[i]);
+                            }
+                        }
+                        i++;
+                    }
+                    break;
+                case 3:
+                    i = 0;
+                    Hexagon hex3 = corner.AdjacentHexesAndCorners.ElementAt(0).Key;
+                    Hexagon hex4 = corner.AdjacentHexesAndCorners.ElementAt(1).Key;
+                    Hexagon hex5 = corner.AdjacentHexesAndCorners.ElementAt(2).Key;
+                    while(result.Count < 4)
+                    {
+                        if (EdgeList[i].AdjacentHexesAndEdges.Count == 3)
+                        {
+                            if ((EdgeList[i].AdjacentHexesAndEdges.ElementAt(0).Key.AreEquals(hex3) || EdgeList[i].AdjacentHexesAndEdges.ElementAt(1).Key.AreEquals(hex3) || EdgeList[i].AdjacentHexesAndEdges.ElementAt(2).Key.AreEquals(hex3)) &&
+                                (EdgeList[i].AdjacentHexesAndEdges.ElementAt(0).Key.AreEquals(hex4) || EdgeList[i].AdjacentHexesAndEdges.ElementAt(1).Key.AreEquals(hex4) || EdgeList[i].AdjacentHexesAndEdges.ElementAt(2).Key.AreEquals(hex4)) &&
+                                (EdgeList[i].AdjacentHexesAndEdges.ElementAt(0).Key.AreEquals(hex5) || EdgeList[i].AdjacentHexesAndEdges.ElementAt(1).Key.AreEquals(hex5) || EdgeList[i].AdjacentHexesAndEdges.ElementAt(2).Key.AreEquals(hex5)))
+                            {
+                                result.Add(EdgeList[i]);
+                            }
+                        }
+                        i++;
+                    }
+                    break;
+            }
+
+            return result;
+        }
+
+        public List<Edge> EdgesAdjacentToEdges(Edge edge)
+        {
+            List<Edge> result = new List<Edge>();
+            Hexagon hex1 = new Hexagon();
+            int edgeId1 = edge.AdjacentHexesAndEdges.ElementAt(0).Value;
+            Hexagon hex2 = new Hexagon();
+            int edgeId2;
+            hex1 = edge.AdjacentHexesAndEdges.ElementAt(0).Key;
+            if (edge.AdjacentHexesAndEdges.Count == 2)
+            {
+                hex2 = edge.AdjacentHexesAndEdges.ElementAt(1).Key;
+                edgeId2 = edge.AdjacentHexesAndEdges.ElementAt(0).Value;
+
+                int edgeIdResult1 = edgeId1 - 1;
+                if(edgeIdResult1 < 0) edgeIdResult1 += 6;
+                Edge edgeResult1 = new Edge(hex1, edgeIdResult1, Limits);
+
+                int edgeIdResult2 = edgeId1 + 1;
+                if (edgeIdResult2 > 5) edgeIdResult1 -= 6;
+                Edge edgeResult2 = new Edge(hex1, edgeIdResult2, Limits);
+
+                int edgeIdResult3 = edgeId1 - 1;
+                if (edgeIdResult3 < 0) edgeIdResult1 += 6;
+                Edge edgeResult3 = new Edge(hex2, edgeIdResult3, Limits);
+
+                int edgeIdResult4 = edgeId1 + 1;
+                if (edgeIdResult4 < 0) edgeIdResult1 -= 6;
+                Edge edgeResult4 = new Edge(hex2, edgeIdResult4, Limits);
+            }
+            else
+            {
+                int edgeIdResult1 = edgeId1 - 1;
+                if (edgeIdResult1 < 0) edgeIdResult1 += 6;
+                Edge edgeResult1 = new Edge(hex1, edgeIdResult1, Limits);
+
+                int edgeIdResult2 = edgeId1 + 1;
+                if (edgeIdResult2 > 5) edgeIdResult1 -= 6;
+                Edge edgeResult2 = new Edge(hex1, edgeIdResult2, Limits);
+            }
+
+
+
+
+
 
 
 

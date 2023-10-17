@@ -44,6 +44,13 @@ namespace SettlersOfCatan
                 }
             }
         }
+
+        public Hexagon()
+        {
+            id = counter;
+            counter++;
+        }
+
         public Hexagon(int q, int r, int s, int odds, int resourceId)
         {
             id = counter;
@@ -136,7 +143,7 @@ namespace SettlersOfCatan
         public List<Hexagon> AbsolutePositionOfAdjacentHexesWithCorner(int corner, Dictionary<char, int[]> limits)
         {
             List<Hexagon> result = new List<Hexagon>();
-            result.Add(this);
+            if (this.HexExists(limits)) result.Add(this);
             Hexagon[] relativePositions = this.RelativePositionOfAdjacentHexesWithCorner(corner);
 
             Hexagon hex1 = new Hexagon(
@@ -156,11 +163,11 @@ namespace SettlersOfCatan
             return result;
         }
 
-        public List<Hexagon> AbsolutePositionOfAdjacentHexesToEdge(int vertice, Dictionary<char, int[]> limits)
+        public List<Hexagon> AbsolutePositionOfAdjacentHexesToEdge(int edge, Dictionary<char, int[]> limits)
         {
             List<Hexagon> result = new List<Hexagon>();
-            result.Add(this);
-            Hexagon relativePosition = this.RelativePositionOfAdjacentHexToEdge(vertice);
+            if(this.HexExists(limits)) result.Add(this);
+            Hexagon relativePosition = this.RelativePositionOfAdjacentHexToEdge(edge);
 
             Hexagon hex = new Hexagon(
                 this.Position[0] + relativePosition.Position[0],
@@ -170,6 +177,18 @@ namespace SettlersOfCatan
             if (hex.HexExists(limits)) result.Add(hex);
 
             return result;
+        }
+
+        public Hexagon TheoriticalAdjacentHexToEdge(int edge)
+        {
+            Hexagon relativePosition = this.RelativePositionOfAdjacentHexToEdge(edge);
+
+            Hexagon hex = new Hexagon(
+                this.Position[0] + relativePosition.Position[0],
+                this.Position[1] + relativePosition.Position[1],
+                this.Position[2] + relativePosition.Position[2]);
+
+            return hex;
         }
 
 
